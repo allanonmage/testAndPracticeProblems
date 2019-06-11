@@ -1,0 +1,43 @@
+/*
+
+The problem was to detect "anything harmful" in a SQL query.  It was especially vague, probably on purpose.  "delete", "truncate" and "update" seemed like good candidates, so that's what I tested for.
+
+Language: Java
+
+/*
+
+
+
+
+
+
+
+
+
+/* package whatever; // don't place package name! */
+
+import java.io.*;
+
+class myCode
+{
+    public static void main (String[] args) throws java.lang.Exception
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String input = br.readLine();
+        
+        boolean valid = true;
+        // Your code to validate input goes here
+      
+        if ( input.toLowerCase().contains("delete")
+            || input.toLowerCase().contains("truncate")
+                || input.toLowerCase().contains("update") ){
+          valid = false;
+        }
+        
+        if(valid) {
+            System.out.println("SELECT Last from Users where First=\"" + input + '"');
+        } else {
+            System.out.println("harmful");
+        }
+    }
+}
