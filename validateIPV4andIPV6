@@ -1,0 +1,78 @@
+/*
+The problem was to validate IPV4 and IPV6 addresses.
+
+I copied and modified code from the below sources.  As usual, Stack Overflow gave me red herrings to chase.  Is it just me??
+
+https://community.oracle.com/thread/1204611
+https://www.techiedelight.com/validate-ip-address-java/
+
+*/
+
+
+
+
+/* package whatever; // don't place package name! */
+
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.net.*;
+
+
+class myCode {
+    // TEST DRIVER: DO NOT CHANGE
+    public static void main (String[] args) throws java.lang.Exception
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String input = br.readLine();
+        System.out.println(type_of_IP_adrs(input));
+    }
+    // END OF TEST DRIVER
+                           
+    public static String type_of_IP_adrs(String ip) {
+        boolean ipv4 = false;
+        boolean ipv6 = false;
+        
+        // Your code here:
+      
+      String INET4ADDRESS = ip;
+
+        String IPV4_REGEX =
+          "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+          "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+          "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\." +
+          "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$";
+
+        Pattern IPV4_PATTERN = Pattern.compile(IPV4_REGEX);
+      
+      
+        if (ip == null) {
+            return "false";
+        }
+      
+      Matcher matcher = IPV4_PATTERN.matcher(ip);
+      
+      try{   
+               InetAddress     addr = InetAddress.getByName( ip.trim() );
+               
+               // String hostname = char(ipAddr.getHostName);
+               String ipaddress = addr.getHostAddress();
+               
+                    ipv4 = true;
+                    ipv6 = true;
+
+               }catch( UnknownHostException uhe )
+               {// invalid ip address
+                    ipv4 = false;
+                    ipv6 = false;
+               }
+        
+        if(matcher.matches()) {
+            return "ipv4";
+        } else if(ipv6) {
+            return "ipv6";
+        } else {
+            return "invalid";
+        }
+    }
+}
